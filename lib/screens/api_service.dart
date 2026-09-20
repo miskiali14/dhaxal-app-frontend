@@ -7,7 +7,7 @@ class ApiService {
   // final String baseUrl = '192.168.221.51:3000'; // Use your server's IP or domain if hosted remotely
   // test
   final String baseUrl =
-      'https://node-firebase-backend.onrender.com'; // Use your server's IP or domain if hosted remotely
+      'https://node-firebase-backend-production.up.railway.app'; // Use your server's IP or domain if hosted remotely
 
   Future<Map<String, dynamic>> saveResult(Map<String, dynamic> result) async {
     final response = await http.post(

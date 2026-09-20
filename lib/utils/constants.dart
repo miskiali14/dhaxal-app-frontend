@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const kPrimaryColor = Colors.blue;
 const kSecondaryColor = Color.fromRGBO(33, 150, 243, 1);
-const kEndpoint = "https://node-firebase-backend.onrender.com";
+const kEndpoint = "https://node-firebase-backend-production.up.railway.app";
 const kPadding = 16.0;
 const kUserInfo = "user_info";
 
