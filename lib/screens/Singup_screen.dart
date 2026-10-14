@@ -74,7 +74,7 @@ class _SignUpState extends State<SignUp> {
     String fullName,
     String email,
     String password,
-    String gender,
+    String? gender,
   ) async {
     if (_formSignupKey.currentState!.validate() && agreePersonalData) {
       try {
@@ -299,7 +299,7 @@ class _SignUpState extends State<SignUp> {
           DropdownButtonFormField<String>(
             value: _gender,
             decoration: _inputDecoration(
-              label: 'Jinsiga',
+              label: 'Jinsiga (ikhtiyaari)',
               hint: 'Dooro jinsigaaga',
               icon: Iconsax.profile_2user,
             ),
@@ -313,12 +313,6 @@ class _SignUpState extends State<SignUp> {
               setState(() {
                 _gender = value;
               });
-            },
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Fadlan dooro jinsigaaga.';
-              }
-              return null;
             },
           ),
           const SizedBox(height: 16),
@@ -420,7 +414,7 @@ class _SignUpState extends State<SignUp> {
                           fullNameController.text.trim(),
                           emailController.text.trim(),
                           passwordController.text,
-                          _gender!,
+                          _gender,
                         );
                       } else if (!agreePersonalData) {
                         ScaffoldMessenger.of(context).showSnackBar(

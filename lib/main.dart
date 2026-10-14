@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:project_graduated/dashboard.dart';
 import 'package:project_graduated/provide/language_provider.dart';
 import 'package:project_graduated/provide/user_provider.dart';
-import 'package:project_graduated/screens/Sigin_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -116,11 +115,11 @@ class HomeDecider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserProvider>(
-      builder: (context, userProvider, child) {
-        return userProvider.user != null ? const Dashboard() : const SigIn();
-      },
-    );
+    // The inheritance calculator and other core features are not
+    // account-based, so the app opens straight into the Dashboard.
+    // Screens/actions that do need an account (saved results, profile
+    // editing, settings) prompt the user to sign in from there.
+    return const Dashboard();
   }
 }
 

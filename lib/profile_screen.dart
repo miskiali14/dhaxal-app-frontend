@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:project_graduated/screens/Sigin_screen.dart';
+import 'package:project_graduated/screens/Singup_screen.dart';
 import 'package:project_graduated/screens/help_screen.dart';
 import 'package:project_graduated/provide/user_provider.dart';
 import 'package:project_graduated/screens/settings_screen.dart';
@@ -43,6 +44,27 @@ class _ProfileState extends State<Profile> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => UpdateProfile()),
+    );
+  }
+
+  void _onSettingsTap() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const SettingsScreen()),
+    );
+  }
+
+  void _onSignInTap() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const SigIn()),
+    );
+  }
+
+  void _onSignUpTap() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const SignUp()),
     );
   }
 
@@ -155,35 +177,64 @@ class _ProfileState extends State<Profile> {
             final user = userProvider.user;
             final imageUrl = _safeImage(user?.image);
 
+            final bool isGuest = user == null;
+
             return SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
               child: Column(
                 children: [
                   _buildHeader(
                     imageUrl: imageUrl,
-                    name: user?.name ?? 'Guest',
-                    email: user?.email ?? 'No email',
+                    name: user?.name ?? 'Martida (Guest)',
+                    email: user?.email ?? 'Ma aadan gelin koonto',
                   ),
                   const SizedBox(height: 18),
-                  _buildActionTile(
-                    icon: Iconsax.profile_circle,
-                    title: 'Profile-kaaga',
-                    subtitle: 'Cusbooneysii xogtaada',
-                    onTap: _onProfileTap,
-                  ),
-                  _buildActionTile(
-                    icon: Icons.help_outline_rounded,
-                    title: 'Help Center',
-                    subtitle: 'Caawimaad iyo hagitaan',
-                    onTap: _onHelpCenterTap,
-                  ),
-                  _buildActionTile(
-                    icon: Iconsax.logout,
-                    title: 'Log Out',
-                    subtitle: 'Ka bax koontadaada',
-                    onTap: _onLogOutTap,
-                    isLogout: true,
-                  ),
+                  if (isGuest) ...[
+                    _buildActionTile(
+                      icon: Icons.login_rounded,
+                      title: 'Soo Gal',
+                      subtitle: 'Gal koontadaada si aad u keydiso natiijooyinka',
+                      onTap: _onSignInTap,
+                    ),
+                    _buildActionTile(
+                      icon: Icons.person_add_alt_1_rounded,
+                      title: 'Diiwaangeli',
+                      subtitle: 'Samee koonto cusub',
+                      onTap: _onSignUpTap,
+                    ),
+                    _buildActionTile(
+                      icon: Icons.help_outline_rounded,
+                      title: 'Help Center',
+                      subtitle: 'Caawimaad iyo hagitaan',
+                      onTap: _onHelpCenterTap,
+                    ),
+                  ] else ...[
+                    _buildActionTile(
+                      icon: Iconsax.profile_circle,
+                      title: 'Profile-kaaga',
+                      subtitle: 'Cusbooneysii xogtaada',
+                      onTap: _onProfileTap,
+                    ),
+                    _buildActionTile(
+                      icon: Iconsax.setting_2,
+                      title: 'Settings',
+                      subtitle: 'Beddel password-ka ama tirtir koontada',
+                      onTap: _onSettingsTap,
+                    ),
+                    _buildActionTile(
+                      icon: Icons.help_outline_rounded,
+                      title: 'Help Center',
+                      subtitle: 'Caawimaad iyo hagitaan',
+                      onTap: _onHelpCenterTap,
+                    ),
+                    _buildActionTile(
+                      icon: Iconsax.logout,
+                      title: 'Log Out',
+                      subtitle: 'Ka bax koontadaada',
+                      onTap: _onLogOutTap,
+                      isLogout: true,
+                    ),
+                  ],
                 ],
               ),
             );

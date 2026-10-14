@@ -51,7 +51,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
         id: userProvider.user!.id,
         name: _nameController.text,
         email: _emailController.text,
-        gender: _gender!,
+        gender: _gender,
         password: userProvider.user!.password, // Keep existing password
         image: userProvider.user!.image, // Keep existing image path
       );
@@ -163,7 +163,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     ),
                     const SizedBox(height: 10),
                     DropdownButtonFormField<String>(
-                      decoration: _inputDecoration('Gender'),
+                      decoration: _inputDecoration('Gender (optional)'),
                       value: _gender,
                       items: const [
                         DropdownMenuItem(value: 'Male', child: Text('Male')),
@@ -174,12 +174,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
                         setState(() {
                           _gender = value;
                         });
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please select your gender';
-                        }
-                        return null;
                       },
                     ),
                     const SizedBox(height: 40),

@@ -16,8 +16,10 @@ class UserService {
     var request = http.MultipartRequest('POST', uri)
       ..fields['name'] = user.name!
       ..fields['email'] = user.email!
-      ..fields['password'] = user.password!
-      ..fields['gender'] = user.gender!;
+      ..fields['password'] = user.password!;
+    if (user.gender != null && user.gender!.isNotEmpty) {
+      request.fields['gender'] = user.gender!;
+    }
 
     if (image != null) {
       final mimeTypeData = lookupMimeType(image.path)!.split('/');
@@ -76,8 +78,10 @@ class UserService {
       var request = http.MultipartRequest('PUT', Uri.parse('$baseUrl/update-profile'))
         ..fields['userId'] = user.id!
         ..fields['name'] = user.name!
-        ..fields['email'] = user.email!
-        ..fields['gender'] = user.gender!;
+        ..fields['email'] = user.email!;
+      if (user.gender != null && user.gender!.isNotEmpty) {
+        request.fields['gender'] = user.gender!;
+      }
 
       if (image != null) {
         final mimeTypeData = lookupMimeType(image.path)!.split('/');

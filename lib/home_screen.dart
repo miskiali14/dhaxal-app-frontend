@@ -46,33 +46,29 @@ class _HomescreenState extends State<Homescreen> {
 
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: user == null
-          ? const Center(
-              child: CircularProgressIndicator(color: accentColor),
-            )
-          : SafeArea(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 22),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildHeader(user),
-                    const SizedBox(height: 16),
-                    _buildQuranCard(),
-                    const SizedBox(height: 16),
-                    _buildMainActionCard(),
-                    const SizedBox(height: 16),
-                    _buildHowToUseCard(),
-                    const SizedBox(height: 16),
-                    _buildDisclaimerCard(),
-                  ],
-                ),
-              ),
-            ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 22),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildHeader(user),
+              const SizedBox(height: 16),
+              _buildQuranCard(),
+              const SizedBox(height: 16),
+              _buildMainActionCard(),
+              const SizedBox(height: 16),
+              _buildHowToUseCard(),
+              const SizedBox(height: 16),
+              _buildDisclaimerCard(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
-  Widget _buildHeader(User user) {
+  Widget _buildHeader(User? user) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
       decoration: BoxDecoration(
@@ -119,7 +115,7 @@ class _HomescreenState extends State<Homescreen> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${user.name ?? "User"}!',
+                  '${user?.name ?? "Martida"}!',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -140,47 +136,48 @@ class _HomescreenState extends State<Homescreen> {
               ],
             ),
           ),
-          PopupMenuButton<String>(
-            icon: const Icon(
-              Icons.more_vert_rounded,
-              color: Colors.white,
-            ),
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14),
-            ),
-            onSelected: (value) {
-              if (value == 'results') {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ResultsPage(email: user.email!),
-                  ),
-                );
-              }
-            },
-            itemBuilder: (context) => const [
-              PopupMenuItem(
-                value: 'results',
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.receipt_long_rounded,
-                      color: primaryColor,
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      'Natiijooyinka',
-                      style: TextStyle(
-                        color: primaryColor,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
+          if (user?.email != null)
+            PopupMenuButton<String>(
+              icon: const Icon(
+                Icons.more_vert_rounded,
+                color: Colors.white,
               ),
-            ],
-          ),
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
+              onSelected: (value) {
+                if (value == 'results') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ResultsPage(email: user!.email!),
+                    ),
+                  );
+                }
+              },
+              itemBuilder: (context) => const [
+                PopupMenuItem(
+                  value: 'results',
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.receipt_long_rounded,
+                        color: primaryColor,
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        'Natiijooyinka',
+                        style: TextStyle(
+                          color: primaryColor,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
         ],
       ),
     );
