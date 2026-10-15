@@ -104,7 +104,20 @@ class _InheritanceCalculatorState extends State<InheritanceCalculator> {
       });
 
       final userProvider = Provider.of<UserProvider>(context, listen: false);
-      final userEmail = userProvider.user?.email ?? '';
+      final userEmail = userProvider.user?.email;
+
+      // Saving history is an account feature. Guests (no email) still get
+      // their result shown immediately, just without it being saved.
+      if (userEmail == null || userEmail.isEmpty) {
+        if (!mounted) return;
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ResultScreen(result: result),
+          ),
+        );
+        return;
+      }
 
       var data = {
         'email': userEmail,
