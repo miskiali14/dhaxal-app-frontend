@@ -18,11 +18,16 @@ class InheritanceCalculator extends StatefulWidget {
 class _InheritanceCalculatorState extends State<InheritanceCalculator> {
   final TextEditingController _propertyValueController =
       TextEditingController();
-  final TextEditingController _numSonsController = TextEditingController();
-  final TextEditingController _numDaughtersController = TextEditingController();
-  final TextEditingController _numBrothersController = TextEditingController();
-  final TextEditingController _numSistersController = TextEditingController();
-  final TextEditingController _numWivesController = TextEditingController();
+  final TextEditingController _numSonsController =
+      TextEditingController(text: '0');
+  final TextEditingController _numDaughtersController =
+      TextEditingController(text: '0');
+  final TextEditingController _numBrothersController =
+      TextEditingController(text: '0');
+  final TextEditingController _numSistersController =
+      TextEditingController(text: '0');
+  final TextEditingController _numWivesController =
+      TextEditingController(text: '0');
 
   String _gender = "Dhadig/Dumar";
   bool _fatherPresent = false;
@@ -244,6 +249,20 @@ class _InheritanceCalculatorState extends State<InheritanceCalculator> {
 
   Widget _spacing() => const SizedBox(height: 12);
 
+  // Tirooyinka waxay ku bilaabmaan 0; marka la taabto dhammaan waa la doortaa
+  // si qoraalka cusub u beddelo 0-ga.
+  Widget _countField(TextEditingController controller, String label) {
+    return TextField(
+      controller: controller,
+      decoration: _inputDecoration(label),
+      keyboardType: TextInputType.number,
+      onTap: () => controller.selection = TextSelection(
+        baseOffset: 0,
+        extentOffset: controller.text.length,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
@@ -347,36 +366,17 @@ class _InheritanceCalculatorState extends State<InheritanceCalculator> {
                 keyboardType: TextInputType.number,
               ),
               _sectionTitle('Carruurta'),
-              TextField(
-                controller: _numSonsController,
-                decoration: _inputDecoration('Tirada wiilasha'),
-                keyboardType: TextInputType.number,
-              ),
+              _countField(_numSonsController, 'Tirada wiilasha'),
               _spacing(),
-              TextField(
-                controller: _numDaughtersController,
-                decoration: _inputDecoration('Tirada gabdhaha'),
-                keyboardType: TextInputType.number,
-              ),
+              _countField(_numDaughtersController, 'Tirada gabdhaha'),
               _sectionTitle('Walaalaha'),
-              TextField(
-                controller: _numBrothersController,
-                decoration: _inputDecoration('Tirada walaalaha ragga ah'),
-                keyboardType: TextInputType.number,
-              ),
+              _countField(_numBrothersController, 'Tirada walaalaha ragga ah'),
               _spacing(),
-              TextField(
-                controller: _numSistersController,
-                decoration: _inputDecoration('Tirada walaalaha dumarka ah'),
-                keyboardType: TextInputType.number,
-              ),
+              _countField(
+                  _numSistersController, 'Tirada walaalaha dumarka ah'),
               if (_gender == "Lab/Rag") ...[
                 _sectionTitle('Xaasaska'),
-                TextField(
-                  controller: _numWivesController,
-                  decoration: _inputDecoration('Tirada xaasaska'),
-                  keyboardType: TextInputType.number,
-                ),
+                _countField(_numWivesController, 'Tirada xaasaska'),
               ],
               _sectionTitle('Waalidiin iyo Qaraabo'),
               _switchCard(

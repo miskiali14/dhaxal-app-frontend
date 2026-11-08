@@ -244,5 +244,6 @@ Map<String, dynamic> calculateInheritance({
   return {
     "shares": shares,
     "references": references,
+    "totalAmount": propertyValue,
   };
 }
